@@ -12,8 +12,8 @@ export class AssetsLoader {
                 promises.push(this.loadAudio(name, this._AssetsFiles[name].src))
             } else {
                 promises.push(this.loadImage(name, this._AssetsFiles[name].src,
-                                             this._AssetsFiles[name].width || undefined,
-                                             this._AssetsFiles[name].height || undefined));
+                                             this._AssetsFiles[name].width  || void 0,
+                                             this._AssetsFiles[name].height || void 0));
                 console.log(name, this._AssetsFiles[name])
             }
         }
@@ -27,8 +27,8 @@ export class AssetsLoader {
             image.onload = () => resolve(name);
             image.onerror = () => reject(`failed to load ${name}`);
             image.src = src;
-            if (width != undefined) image.width = width;
-            if (height != undefined) image.height = height;
+            if (width != void 0) image.width = width;
+            if (height != void 0) image.height = height;
         });
     }
 
@@ -50,7 +50,7 @@ export class AssetsLoader {
      * For example loader.Load (callback, Object, errTimeout, 1500, '');
      */
     
-    async Load(callback, ObjectAssets, errTimeout = 1500, AnimationTimeout = 1000, Animation = undefined) {
+    async Load(callback, ObjectAssets, errTimeout = 1500, AnimationTimeout = 1000, Animation = void 0) {
         try {
             await this.loadAll()
             ObjectAssets = Object.assign(ObjectAssets, this._Assets);
@@ -58,7 +58,7 @@ export class AssetsLoader {
             alert(`Error loading resources! ${err}. Reloading site...`);
             setTimeout(() => location.reload, errTimeout);
         }
-        if (Animation != undefined) {``
+        if (Animation != void 0) {
             //run anim
             await new Promise(resolve => setTimeout(resolve, AnimationTimeout));
             //stop animation
