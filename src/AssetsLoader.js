@@ -8,7 +8,7 @@ export default class AssetsLoader {
     const promises = [];
     for (const name in this._AssetsFiles) {
       if (!Object.prototype.hasOwnProperty.call(this._AssetsFiles, name)) continue;
-      if (this._AssetsFiles[name].src.includes(`mp3`, `mpeg`, `wav`) === true) {
+      if (this._AssetsFiles[name].src.includes(`mp3`, `mpeg`, `wav`)) {
         promises.push(this.loadAudio(name, this._AssetsFiles[name].src));
       } else {
         promises.push(
@@ -49,10 +49,12 @@ export default class AssetsLoader {
   }
   /**
    * Causes the loading of objects..
-   * @param Load Calls callback and also assigns all loaded assets to the array you need.
-   * errtimeout and AnimationTimeout are recorded in ms.
+   * @param {function} callback Calls callback
+   * @param {Object} ObjectAssets assigns all loaded assets
+   * @param {Number} errTimeout wait show err in ms
+   * @param {Number} AnimationTimeout in ms
+   * @param {undefined} Animation (``) plug if you need AnimationTimeout
    * Animation and AnimationTimeout are not available yet but you can use this as a delay.
-   * For example loader.Load (callback, Object, errTimeout, 1500, '');
    */
 
   async Load(
