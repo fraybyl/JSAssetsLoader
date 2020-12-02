@@ -6,10 +6,8 @@ Using this library, you can asynchronously load all kinds of assets, as well as 
 # Example 
 ``` 
 const loader = new AssetsLoader({
-    bg1: {src: `assets/bg1.png`, width: 100, height: 100},
-    bg2: {src: `assets/bg2.jpg`, width: 100},
-    bg3: {src: `assets/bg3.png`, height: 100},
-    fonMus: {src: `assets/fon.mp3`},
+    bg1: `assets/bg1.png`,
+    fonMus: `assets/fon.mp3
 }); 
 loader.Load(callback, Object, errTimeout, AnimationTimeout, Animation );
 ctx.drawImage(Object[`bg1`], 0, 0);
