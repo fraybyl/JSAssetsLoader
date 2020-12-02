@@ -8,32 +8,24 @@ export default class AssetsLoader {
     const promises = [];
     for (const name in this._AssetsFiles) {
       if (!Object.prototype.hasOwnProperty.call(this._AssetsFiles, name)) continue;
-      if (this._AssetsFiles[name].src.includes(`mp3`, `mpeg`, `wav`)) {
-        promises.push(this.loadAudio(name, this._AssetsFiles[name].src));
+      if (this._AssetsFiles[name].includes(`mp3`, `mpeg`, `wav`)) {
+        promises.push(this.loadAudio(name, this._AssetsFiles[name]));
       } else {
         promises.push(
-          this.loadImage(
-            name,
-            this._AssetsFiles[name].src,
-            this._AssetsFiles[name].width || undefined,
-            this._AssetsFiles[name].height || undefined,
-          ),
+          this.loadImage(name, this._AssetsFiles[name]),
         );
-        console.log(name, this._AssetsFiles[name]);
       }
     }
     return Promise.all(promises);
   }
 
-  loadImage(name, src, width, height) {
+  loadImage(name, src) {
     return new Promise((resolve, reject) => {
       const image = new Image();
       this._Assets[name] = image;
       image.onload = () => resolve(name);
       image.onerror = () => reject(new Error(`failed to load ${name}`));
       image.src = src;
-      if (width !== undefined) image.width = width;
-      if (height !== undefined) image.height = height;
     });
   }
 
@@ -67,7 +59,7 @@ export default class AssetsLoader {
     try {
       await this.loadAll();
       // eslint-disable-next-line no-param-reassign
-      ObjectAssets = Object.assign(ObjectAssets, this._Assets);
+      Object.assign(ObjectAssets, this._Assets);
     } catch (err) {
       // eslint-disable-next-line no-alert
       alert(`Error loading resources! ${err}. Reloading site...`);
